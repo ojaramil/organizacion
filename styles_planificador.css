@@ -1,33 +1,19 @@
-/* Colores basados en el logo */
+/* Colores basados en el diseño y logo */
 :root {
-    --blue-color: #0072bc;
-    --red-color: #c1272d;
-    --yellow-color: #fdb813;
-    --orange-color: #f7941d;
-    --white-color: #ffffff;
-    --gray-color: #f5f5f5;
-    --dark-gray-color: #333333;
-}
-
-/* Modo oscuro */
-body.dark-mode {
-    background-color: #333;
-    color: white;
-}
-
-body.dark-mode .container {
-    background-color: #444;
-}
-
-body.dark-mode input, body.dark-mode select {
-    background-color: #555;
-    color: white;
+    --blue-dark: #1b3b5f;   /* Azul oscuro para el fondo principal */
+    --blue-light: #3a8ec1;  /* Azul claro */
+    --green: #4caf50;       /* Verde */
+    --white: #ffffff;       /* Texto principal en blanco */
+    --yellow: #fdb813;      /* Amarillo del logo */
+    --red: #c1272d;         /* Rojo del logo */
+    --orange: #f7941d;      /* Naranja del logo */
+    --gray-light: #f5f5f5;
 }
 
 /* Estilos base */
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--gray-color);
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--blue-dark); /* Fondo azul oscuro */
     margin: 0;
     padding: 0;
     display: flex;
@@ -36,92 +22,110 @@ body {
     min-height: 100vh;
 }
 
+/* Fondo de textura simulada con color oscuro */
 .container {
-    background-color: var(--white-color);
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+    background-color: var(--blue-dark); /* Fondo azul oscuro */
+    border-radius: 15px;
+    max-width: 400px;
     width: 100%;
     padding: 20px;
-    margin-top: 20px;
     box-sizing: border-box;
-}
-
-header {
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Sombra suave para dar profundidad */
+    margin-top: 20px;
+    color: var(--white);
     text-align: center;
-    margin-bottom: 20px;
 }
 
-h1 {
-    font-size: 28px;
-    color: var(--blue-color);
+header h1 {
+    color: var(--white); /* Color del texto blanco */
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
+/* Estilos para los botones */
 .primary-btn, .secondary-btn {
-    padding: 12px;
+    padding: 15px;
     font-size: 16px;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
-    color: var(--white-color);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 250px;
+    color: var(--white);
+    margin: 10px auto;
+    display: block;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .primary-btn {
-    background-color: var(--blue-color);
+    background-color: var(--green); /* Botón principal en verde */
 }
 
 .secondary-btn {
-    background-color: var(--orange-color);
+    background-color: var(--blue-light); /* Botón secundario en azul claro */
 }
 
 .primary-btn:hover {
-    background-color: var(--red-color);
+    background-color: var(--yellow); /* Cambia de color al pasar el mouse */
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* Sombra al hacer hover */
 }
 
 .secondary-btn:hover {
-    background-color: var(--yellow-color);
+    background-color: var(--orange);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Estilos para los campos de entrada */
 .input-field {
     padding: 10px;
     font-size: 16px;
     width: 100%;
-    border: 1px solid var(--dark-gray-color);
-    border-radius: 5px;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 2px solid var(--white);
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo translúcido */
+    color: var(--white);
+    transition: border-color 0.3s ease;
 }
 
+.input-field:focus {
+    border-color: var(--green); /* Color verde al enfocar */
+    outline: none;
+}
+
+/* Lista de rutinas */
 .routine-list ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .routine-list li {
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: var(--white);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: var(--gray-color);
-    margin-bottom: 10px;
-    border: 1px solid var(--dark-gray-color);
-    border-radius: 5px;
 }
 
 .routine-list li.completed {
     text-decoration: line-through;
-    color: var(--blue-color);
-    background-color: var(--yellow-color);
+    color: var(--yellow); /* Rutinas completadas en amarillo */
 }
 
-/* Estadísticas */
+/* Sección de estadísticas */
 .statistics-section h2 {
-    color: var(--blue-color);
+    color: var(--white);
     margin-bottom: 10px;
 }
 
 #routine-chart {
     width: 100%;
-    height: 300px;
+    height: 250px;
     margin-top: 20px;
 }
 
@@ -130,13 +134,32 @@ h1 {
     margin-top: 20px;
 }
 
+.music-section h2 {
+    color: var(--white);
+}
+
+audio {
+    width: 100%;
+    margin-top: 10px;
+}
+
 /* Transición entre rutinas */
 .transition-section {
     margin-top: 20px;
 }
 
+.transition-section h2 {
+    color: var(--white);
+}
+
 #transition-timer {
     font-size: 18px;
-    color: var(--dark-gray-color);
+    color: var(--white);
     margin-top: 10px;
+}
+
+/* Estilos de modo oscuro */
+body.dark-mode {
+    background-color: #1e2a38;
+    color: white;
 }
