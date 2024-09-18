@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificador de Rutinas - Asperger</title>
+    <link rel="stylesheet" href="styles_planificador.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Mi Planificador de Rutinas</h1>
+            <button id="low-stimulation-mode" class="primary-btn">Modo Baja Estimulación</button>
+            <button id="toggle-dark-mode" class="primary-btn">Modo Oscuro</button>
+        </header>
+
+        <!-- Sección para agregar nuevas rutinas -->
+        <section class="routine-input">
+            <input type="text" id="new-routine" placeholder="Agregar nueva rutina..." class="input-field">
+             <select id="routine-icon" class="input-field">
+                <!-- Rutinas Diarias -->
+                <option value="📚">Lectura</option>
+                <option value="🛏️">Dormir</option>
+                <option value="🍽️">Desayuno</option>
+                <option value="🍽️">Almuerzo</option>
+                <option value="🍽️">Cena</option>
+                <option value="🚶">Caminar</option>
+                <option value="🛀">Tomar un baño relajante</option>
+
+                <!-- Ejercicio y Actividad Física -->
+                <option value="🏃">Correr</option>
+                <option value="🚴">Bicicleta</option>
+                <option value="🏋️‍♂️">Entrenamiento de fuerza</option>
+                <option value="🧘‍♂️">Yoga</option>
+                <option value="🧘‍♀️">Meditación</option>
+                <option value="🤸">Estiramientos</option>
+
+                <!-- Autocuidado y Bienestar -->
+                <option value="🧖‍♀️">Cuidado de la piel</option>
+                <option value="💆">Tiempo para mí</option>
+                <option value="💧">Beber agua</option>
+
+                <!-- Rutinas de Estudio o Trabajo -->
+                <option value="👨‍💻">Trabajo en un proyecto</option>
+                <option value="📚">Tiempo de estudio</option>
+                <option value="📋">Planificación del día</option>
+                <option value="🗂️">Organizar el espacio de trabajo</option>
+
+                <!-- Creatividad y Hobbies -->
+                <option value="🎨">Pintura</option>
+                <option value="🎸">Tocar un instrumento</option>
+                <option value="✍️">Escribir en un diario</option>
+                <option value="📸">Fotografía</option>
+                <option value="🖌️">Dibujo</option>
+                <option value="🍳">Cocinar</option>
+                <option value="🌿">Jardinería</option>
+
+                <!-- Socialización -->
+                <option value="📞">Hablar con amigos</option>
+                <option value="🎥">Videollamada</option>
+                <option value="👨‍👩‍👧">Hablar con la familia</option>
+
+                <!-- Sensoriales y Relajación -->
+                <option value="🎧">Escuchar música relajante</option>
+                <option value="🧠">Mindfulness</option>
+                <option value="🌳">Tomar aire fresco</option>
+
+                <!-- Rutinas de Organización del Hogar -->
+                <option value="🧹">Limpieza del hogar</option>
+                <option value="🧺">Lavar la ropa</option>
+                <option value="🛏️">Hacer la cama</option>
+                <option value="🍽️">Lavar los platos</option>
+
+                <!-- Desarrollo Personal -->
+                <option value="📖">Aprender algo nuevo</option>
+                <option value="🎓">Tomar un curso</option>
+                <option value="🚀">Desarrollo de habilidades</option>
+            </select>
+
+
+            <!-- Campo de prioridad -->
+            <select id="routine-priority" class="input-field">
+                <option value="alta">Alta Prioridad</option>
+                <option value="media">Prioridad Media</option>
+                <option value="baja">Baja Prioridad</option>
+            </select>
+
+            <!-- Rutinas recurrentes -->
+            <label for="recurring-routine">Recurrente:</label>
+            <input type="checkbox" id="recurring-routine">
+
+            <!-- Campos adicionales -->
+            <input type="number" id="routine-time" placeholder="Duración (minutos)" class="input-field">
+            <select id="mood-before" class="input-field">
+                <option value="🙂">Feliz</option>
+                <option value="😐">Neutral</option>
+                <option value="😞">Triste</option>
+            </select>
+            <input type="time" id="routine-time-start" placeholder="Hora de inicio" class="input-field">
+            <button id="add-routine" class="primary-btn">Agregar</button>
+        </section>
+
+        <!-- Sección de Filtros de Prioridad -->
+        <section class="filter-priority">
+            <h2>Filtrar por Prioridad</h2>
+            <button id="filter-all" class="secondary-btn">Todas</button>
+            <button id="filter-high" class="secondary-btn">Alta</button>
+            <button id="filter-medium" class="secondary-btn">Media</button>
+            <button id="filter-low" class="secondary-btn">Baja</button>
+        </section>
+
+        <!-- Lista de rutinas -->
+        <section class="routine-list">
+            <h2>Mis Rutinas Diarias</h2>
+            <ul id="routine-items"></ul>
+        </section>
+
+        <!-- Sección de estadísticas -->
+        <section class="statistics-section">
+            <h2>Estadísticas</h2>
+            <p id="total-routines">Rutinas completadas: 0</p>
+            <p id="total-time">Tiempo total invertido: 0 minutos</p>
+            <canvas id="routine-chart"></canvas> <!-- Gráfico para estadísticas -->
+        </section>
+
+        <!-- Controles de música relajante -->
+        <section class="music-section">
+            <h2>Música Relajante</h2>
+            <audio id="relaxing-music" controls>
+                <source src="relaxing-music.mp3" type="audio/mp3">
+                Tu navegador no soporta audio HTML5.
+            </audio>
+        </section>
+
+        <!-- Transición entre rutinas -->
+        <section class="transition-section">
+            <h2>Transición entre Rutinas</h2>
+            <button id="start-transition" class="primary-btn">Iniciar Transición</button>
+            <p id="transition-timer"></p>
+        </section>
+    </div>
+
+    <script src="app_planificador.js"></script>
+</body>
+</html>
