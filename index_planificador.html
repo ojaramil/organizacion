@@ -1,24 +1,30 @@
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planificador de Rutinas - Asperger</title>
-    <link rel="stylesheet" href="styles_planificador.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1>Mi Planificador de Rutinas</h1>
-            <button id="low-stimulation-mode" class="primary-btn">Modo Baja Estimulación</button>
-            <button id="toggle-dark-mode" class="primary-btn">Modo Oscuro</button>
+            <h1>Planificador de Rutinas</h1>
         </header>
 
         <!-- Sección para agregar nuevas rutinas -->
         <section class="routine-input">
             <input type="text" id="new-routine" placeholder="Agregar nueva rutina..." class="input-field">
-             <select id="routine-icon" class="input-field">
+                         <select id="routine-icon" class="input-field">
                 <!-- Rutinas Diarias -->
                 <option value="📚">Lectura</option>
                 <option value="🛏️">Dormir</option>
@@ -86,45 +92,27 @@
                 <option value="baja">Baja Prioridad</option>
             </select>
 
-            <!-- Rutinas recurrentes -->
-            <label for="recurring-routine">Recurrente:</label>
-            <input type="checkbox" id="recurring-routine">
-
-            <!-- Campos adicionales -->
             <input type="number" id="routine-time" placeholder="Duración (minutos)" class="input-field">
-            <select id="mood-before" class="input-field">
-                <option value="🙂">Feliz</option>
-                <option value="😐">Neutral</option>
-                <option value="😞">Triste</option>
-            </select>
             <input type="time" id="routine-time-start" placeholder="Hora de inicio" class="input-field">
-            <button id="add-routine" class="primary-btn">Agregar</button>
+
+            <button id="add-routine" class="primary-btn">Agregar Rutina</button>
         </section>
 
-        <!-- Sección de Filtros de Prioridad -->
-        <section class="filter-priority">
-            <h2>Filtrar por Prioridad</h2>
-            <button id="filter-all" class="secondary-btn">Todas</button>
-            <button id="filter-high" class="secondary-btn">Alta</button>
-            <button id="filter-medium" class="secondary-btn">Media</button>
-            <button id="filter-low" class="secondary-btn">Baja</button>
-        </section>
-
-        <!-- Lista de rutinas -->
+        <!-- Sección de Rutinas -->
         <section class="routine-list">
-            <h2>Mis Rutinas Diarias</h2>
+            <h2>Mis Rutinas</h2>
             <ul id="routine-items"></ul>
         </section>
 
-        <!-- Sección de estadísticas -->
+        <!-- Sección de Estadísticas -->
         <section class="statistics-section">
             <h2>Estadísticas</h2>
             <p id="total-routines">Rutinas completadas: 0</p>
             <p id="total-time">Tiempo total invertido: 0 minutos</p>
-            <canvas id="routine-chart"></canvas> <!-- Gráfico para estadísticas -->
+            <canvas id="routine-chart"></canvas>
         </section>
 
-        <!-- Controles de música relajante -->
+        <!-- Música Relajante -->
         <section class="music-section">
             <h2>Música Relajante</h2>
             <audio id="relaxing-music" controls>
@@ -133,7 +121,7 @@
             </audio>
         </section>
 
-        <!-- Transición entre rutinas -->
+        <!-- Transición entre Rutinas -->
         <section class="transition-section">
             <h2>Transición entre Rutinas</h2>
             <button id="start-transition" class="primary-btn">Iniciar Transición</button>
@@ -141,6 +129,7 @@
         </section>
     </div>
 
-    <script src="app_planificador.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
+
