@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario de Rutina Diaria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .legend {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .legend h3 {
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .schedule-section {
+            padding: 30px;
+        }
+
+        .time-section {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .time-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .time-section h2 .emoji {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .task-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid;
+        }
+
+        .task:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .task.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
+        .task-time {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #666;
+            min-width: 80px;
+            margin-right: 15px;
+        }
+
+        .task-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .task-description {
+            flex: 1;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .weekly-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            margin-top: 30px;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .weekly-section h2 {
+            color: #8b4513;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .weekly-tasks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .weekly-task {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid;
+        }
+
+        .controls {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin: 5px;
+            min-width: 120px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .task {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .task-time {
+                min-width: auto;
+                margin-right: 0;
+            }
+            
+            .legend-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+        }
+
+        /* Colores de categoría */
+        .color-higiene { background-color: #4A90E2; }
+        .color-tareas { background-color: #7ED321; }
+        .color-mascotas { background-color: #F5A623; }
+        .color-comidas { background-color: #9013FE; }
+        .color-pagos { background-color: #D0021B; }
+        .color-escuela { background-color: #F8E71C; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗓️ Horario de Rutina Diaria</h1>
+            <p>Organiza tu día con eficiencia y propósito</p>
+        </div>
+
+        <div class="legend">
+            <h3>🎨 Colores por categoría</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-color color-higiene"></div>
+                    <span>Higiene personal</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-tareas"></div>
+                    <span>Tareas de la casa</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-mascotas"></div>
+                    <span>Mascotas y animales</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-comidas"></div>
+                    <span>Comidas</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-pagos"></div>
+                    <span>Pagos / compras / trámites</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-escuela"></div>
+                    <span>Escuela / clases / natación</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="schedule-section">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="totalTasks">0</div>
+                    <div class="stat-label">Tareas totales</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="completedTasks">0</div>
+                    <div class="stat-label">Completadas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="progressPercent">0%</div>
+                    <div class="stat-label">Progreso</div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="time-section">
+                <h2><span class="emoji">🌅</span>Mañana</h2>
+                <div class="task-list" id="morningTasks">
+                    <!-- Las tareas se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <div class="time-section">
+                <h2><span class="emoji">☀️</span>Mediodía</h2>
+                <div class="task-list" id="middayTasks">
+                    <!-- Las tareas se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <div class="time-section">
+                <h2><span class="emoji">🌆</span>Tarde</h2>
+                <div class="task-list" id="afternoonTasks">
+                    <!-- Las tareas se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <div class="time-section">
+                <h2><span class="emoji">🌙</span>Noche</h2>
+                <div class="task-list" id="eveningTasks">
+                    <!-- Las tareas se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <div class="weekly-section">
+                <h2>📆 Tareas semanales / mensuales</h2>
+                <div class="weekly-tasks" id="weeklyTasks">
+                    <!-- Las tareas semanales se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="resetAllTasks()">🔄 Reiniciar todo</button>
+            <button class="btn" onclick="markAllAsCompleted()">✅ Marcar todo como completado</button>
+            <button class="btn" onclick="finishDay()">🌙 Finalizar día</button>
+            <button class="btn" onclick="exportSchedule()">📤 Exportar horario</button>
+        </div>
+    </div>
+
+    <script>
+        // Datos del horario
+        const scheduleData = {
+            morning: [
+                { time: "6:30", description: "Bañarse, afeitarse (si toca), poner desodorante y bloqueador", category: "higiene" },
+                { time: "6:45", description: "Cepillarse los dientes, lavarse los pies", category: "higiene" },
+                { time: "7:00", description: "Hacer la cama", category: "tareas" },
+                { time: "7:10", description: "Descongelar la carne (importante hacerlo temprano)", category: "comidas" },
+                { time: "7:15", description: "Preparar desayuno", category: "comidas" },
+                { time: "7:45", description: "Dar de comer a las tilapias", category: "mascotas" },
+                { time: "8:00", description: "Atender clases (si aplica ese día)", category: "escuela" }
+            ],
+            midday: [
+                { time: "12:00", description: "Lavar los platos del desayuno", category: "tareas" },
+                { time: "12:15", description: "Secar y guardar platos", category: "tareas" },
+                { time: "12:30", description: "Preparar almuerzo", category: "comidas" },
+                { time: "1:30", description: "Ir a natación (días fijos, ej. lunes, miércoles, viernes)", category: "escuela" }
+            ],
+            afternoon: [
+                { time: "4:00", description: "Lavar ropa (si toca día), tender ropa", category: "tareas" },
+                { time: "4:30", description: "Revisar ropa seca y guardarla", category: "tareas" },
+                { time: "5:00", description: "Lavar zapatos (ej. viernes o sábado)", category: "tareas" },
+                { time: "5:30", description: "Cepillar a Max", category: "mascotas" },
+                { time: "5:45", description: "Mantener limpia la zona verde", category: "tareas" }
+            ],
+            evening: [
+                { time: "7:00", description: "Preparar la cena", category: "comidas" },
+                { time: "7:45", description: "Lavar, secar y guardar platos", category: "tareas" },
+                { time: "8:15", description: "Revisar menú de comidas (planificar día siguiente)", category: "comidas" },
+                { time: "8:30", description: "Cepillarse los dientes, lavarse los pies", category: "higiene" },
+                { time: "9:00", description: "Dormir / descanso", category: "escuela" }
+            ],
+            weekly: [
+                { description: "Bañar a Max y Lucy → 1 vez al mes (ej. primer sábado del mes a las 9:00 am)", category: "mascotas" },
+                { description: "CCSS → primer lunes del mes 10:00 am", category: "pagos" },
+                { description: "Liberty → primer martes del mes 10:00 am", category: "pagos" },
+                { description: "Hacer lista de compras → domingo 5:00 pm", category: "pagos" },
+                { description: "Ir a hacer las compras → lunes 8:30 am", category: "pagos" },
+                { description: "Revisar menú de comidas → cada domingo 6:00 pm", category: "comidas" }
+            ]
+        };
+
+        // Mapeo de categorías a colores
+        const categoryColors = {
+            higiene: 'color-higiene',
+            tareas: 'color-tareas',
+            mascotas: 'color-mascotas',
+            comidas: 'color-comidas',
+            pagos: 'color-pagos',
+            escuela: 'color-escuela'
+        };
+
+        // Estado de las tareas
+        let taskStates = {};
+
+        // Inicializar la aplicación
+        function init() {
+            loadTaskStates();
+            renderSchedule();
+            updateStats();
+        }
+
+        // Cargar estados de tareas desde localStorage
+        function loadTaskStates() {
+            const saved = localStorage.getItem('taskStates');
+            if (saved) {
+                taskStates = JSON.parse(saved);
+            }
+        }
+
+        // Guardar estados de tareas en localStorage
+        function saveTaskStates() {
+            localStorage.setItem('taskStates', JSON.stringify(taskStates));
+        }
+
+        // Renderizar el horario
+        function renderSchedule() {
+            renderTimeSection('morning', 'morningTasks');
+            renderTimeSection('midday', 'middayTasks');
+            renderTimeSection('afternoon', 'afternoonTasks');
+            renderTimeSection('evening', 'eveningTasks');
+            renderWeeklyTasks();
+        }
+
+        // Renderizar una sección de tiempo
+        function renderTimeSection(sectionKey, containerId) {
+            const container = document.getElementById(containerId);
+            const tasks = scheduleData[sectionKey];
+            
+            container.innerHTML = tasks.map((task, index) => {
+                const taskId = `${sectionKey}_${index}`;
+                const isCompleted = taskStates[taskId] || false;
+                const colorClass = categoryColors[task.category];
+                
+                return `
+                    <div class="task ${isCompleted ? 'completed' : ''}" data-task-id="${taskId}">
+                        <div class="task-time">${task.time}</div>
+                        <div class="task-color ${colorClass}"></div>
+                        <div class="task-description">${task.description}</div>
+                        <input type="checkbox" class="task-checkbox" ${isCompleted ? 'checked' : ''} 
+                               onchange="toggleTask('${taskId}')">
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Renderizar tareas semanales
+        function renderWeeklyTasks() {
+            const container = document.getElementById('weeklyTasks');
+            const tasks = scheduleData.weekly;
+            
+            container.innerHTML = tasks.map((task, index) => {
+                const taskId = `weekly_${index}`;
+                const isCompleted = taskStates[taskId] || false;
+                const colorClass = categoryColors[task.category];
+                
+                return `
+                    <div class="weekly-task ${isCompleted ? 'completed' : ''}" data-task-id="${taskId}">
+                        <div style="display: flex; align-items: center;">
+                            <div class="task-color ${colorClass}" style="margin-right: 15px;"></div>
+                            <div style="flex: 1;">${task.description}</div>
+                            <input type="checkbox" class="task-checkbox" ${isCompleted ? 'checked' : ''} 
+                                   onchange="toggleTask('${taskId}')">
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Alternar estado de una tarea
+        function toggleTask(taskId) {
+            taskStates[taskId] = !taskStates[taskId];
+            saveTaskStates();
+            updateTaskDisplay(taskId);
+            updateStats();
+        }
+
+        // Actualizar la visualización de una tarea
+        function updateTaskDisplay(taskId) {
+            const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+            if (taskElement) {
+                const isCompleted = taskStates[taskId];
+                taskElement.classList.toggle('completed', isCompleted);
+                const checkbox = taskElement.querySelector('.task-checkbox');
+                if (checkbox) {
+                    checkbox.checked = isCompleted;
+                }
+            }
+        }
+
+        // Actualizar estadísticas
+        function updateStats() {
+            const allTasks = Object.keys(taskStates);
+            const completedTasks = allTasks.filter(taskId => taskStates[taskId]).length;
+            const totalTasks = allTasks.length;
+            const progressPercent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+            document.getElementById('totalTasks').textContent = totalTasks;
+            document.getElementById('completedTasks').textContent = completedTasks;
+            document.getElementById('progressPercent').textContent = progressPercent + '%';
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+        }
+
+        // Reiniciar todas las tareas
+        function resetAllTasks() {
+            if (confirm('¿Estás seguro de que quieres reiniciar todas las tareas?')) {
+                taskStates = {};
+                saveTaskStates();
+                renderSchedule();
+                updateStats();
+            }
+        }
+
+        // Marcar todas las tareas como completadas
+        function markAllAsCompleted() {
+            if (confirm('¿Marcar todas las tareas como completadas?')) {
+                // Obtener todos los IDs de tareas
+                const allTaskIds = [];
+                Object.keys(scheduleData).forEach(sectionKey => {
+                    if (sectionKey !== 'weekly') {
+                        scheduleData[sectionKey].forEach((_, index) => {
+                            allTaskIds.push(`${sectionKey}_${index}`);
+                        });
+                    }
+                });
+                scheduleData.weekly.forEach((_, index) => {
+                    allTaskIds.push(`weekly_${index}`);
+                });
+
+                // Marcar todas como completadas
+                allTaskIds.forEach(taskId => {
+                    taskStates[taskId] = true;
+                });
+
+                saveTaskStates();
+                renderSchedule();
+                updateStats();
+            }
+        }
+
+        // Finalizar día - borra solo las tareas diarias, mantiene las semanales
+        function finishDay() {
+            const completedDailyTasks = Object.keys(taskStates).filter(taskId => 
+                taskStates[taskId] && !taskId.startsWith('weekly_')
+            );
+            
+            if (completedDailyTasks.length === 0) {
+                alert('No hay tareas diarias completadas para finalizar el día.');
+                return;
+            }
+
+            if (confirm(`¿Finalizar el día?\n\nSe eliminarán ${completedDailyTasks.length} tareas diarias completadas.\nLas tareas semanales se mantendrán.\n\n¿Continuar?`)) {
+                // Crear backup antes de borrar
+                const backupData = {
+                    fecha: new Date().toLocaleDateString('es-ES'),
+                    hora: new Date().toLocaleTimeString('es-ES'),
+                    tareasCompletadas: completedDailyTasks.length,
+                    tareas: completedDailyTasks.map(taskId => ({
+                        id: taskId,
+                        completada: taskStates[taskId]
+                    }))
+                };
+
+                // Guardar backup en localStorage
+                const backups = JSON.parse(localStorage.getItem('dayBackups') || '[]');
+                backups.push(backupData);
+                localStorage.setItem('dayBackups', JSON.stringify(backups));
+
+                // Eliminar solo las tareas diarias completadas
+                completedDailyTasks.forEach(taskId => {
+                    delete taskStates[taskId];
+                });
+
+                saveTaskStates();
+                renderSchedule();
+                updateStats();
+
+                // Mostrar resumen del día
+                showDaySummary(backupData);
+            }
+        }
+
+        // Mostrar resumen del día finalizado
+        function showDaySummary(backupData) {
+            const summary = `
+                🌙 ¡Día finalizado exitosamente!
+                
+                📊 Resumen del día:
+                • Tareas completadas: ${backupData.tareasCompletadas}
+                • Fecha: ${backupData.fecha}
+                • Hora: ${backupData.hora}
+                
+                ✅ Las tareas diarias han sido eliminadas
+                📅 Las tareas semanales se mantienen
+                💾 Se ha guardado un respaldo del día
+            `;
+            
+            alert(summary);
+        }
+
+        // Exportar horario
+        function exportSchedule() {
+            const completedTasks = Object.keys(taskStates).filter(taskId => taskStates[taskId]);
+            const totalTasks = Object.keys(taskStates).length;
+            const progress = totalTasks > 0 ? Math.round((completedTasks.length / totalTasks) * 100) : 0;
+
+            const exportData = {
+                fecha: new Date().toLocaleDateString('es-ES'),
+                progreso: `${progress}%`,
+                tareasCompletadas: completedTasks.length,
+                tareasTotales: totalTasks,
+                tareas: Object.keys(taskStates).map(taskId => ({
+                    id: taskId,
+                    completada: taskStates[taskId]
+                }))
+            };
+
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `horario-rutina-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Inicializar cuando se carga la página
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
