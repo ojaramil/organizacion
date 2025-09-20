@@ -162,6 +162,64 @@
             cursor: pointer;
         }
 
+        .menu-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            margin-top: 30px;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .menu-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .menu-day {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-day:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .menu-day h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .menu-meal {
+            margin: 10px 0;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .menu-meal-label {
+            font-weight: bold;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+
+        .menu-meal-item {
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
         .weekly-section {
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             margin-top: 30px;
@@ -294,7 +352,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🗓️ Horario de Rutina Diaria</h1>
+            <h1>🗓️ Horario de Rutina Diaria - Sergio.</h1>
             <p>Organiza tu día con eficiencia y propósito</p>
         </div>
 
@@ -376,6 +434,13 @@
                 </div>
             </div>
 
+            <div class="menu-section">
+                <h2>📋 Menú Semanal</h2>
+                <div class="menu-grid" id="weeklyMenu">
+                    <!-- El menú se cargará dinámicamente -->
+                </div>
+            </div>
+
             <div class="weekly-section">
                 <h2>📆 Tareas semanales / mensuales</h2>
                 <div class="weekly-tasks" id="weeklyTasks">
@@ -396,33 +461,26 @@
         // Datos del horario
         const scheduleData = {
             morning: [
-                { time: "6:30", description: "Bañarse, afeitarse (si toca), poner desodorante y bloqueador", category: "higiene" },
-                { time: "6:45", description: "Cepillarse los dientes, lavarse los pies", category: "higiene" },
-                { time: "7:00", description: "Hacer la cama", category: "tareas" },
-                { time: "7:10", description: "Descongelar la carne (importante hacerlo temprano)", category: "comidas" },
-                { time: "7:15", description: "Preparar desayuno", category: "comidas" },
-                { time: "7:45", description: "Dar de comer a las tilapias", category: "mascotas" },
-                { time: "8:00", description: "Atender clases (si aplica ese día)", category: "escuela" }
+                { time: "06:30", description: "Preparar desayuno - loncha turipas", category: "comidas" },
+                { time: "07:00", description: "Bañarse - agitar - poner desodorante - bloqueador - lavado dientes", category: "higiene" },
+                { time: "07:30", description: "Hacer la cama - recoger ropa sucia y poner en lavadora", category: "tareas" },
+                { time: "08:00", description: "Ver rodada para el día", category: "escuela" },
+                { time: "08:20", description: "Si aplica ir a la parada y tomar el bus", category: "escuela" }
             ],
             midday: [
-                { time: "12:00", description: "Lavar los platos del desayuno", category: "tareas" },
-                { time: "12:15", description: "Secar y guardar platos", category: "tareas" },
                 { time: "12:30", description: "Preparar almuerzo", category: "comidas" },
-                { time: "1:30", description: "Ir a natación (días fijos, ej. lunes, miércoles, viernes)", category: "escuela" }
-            ],
-            afternoon: [
-                { time: "4:00", description: "Lavar ropa (si toca día), tender ropa", category: "tareas" },
-                { time: "4:30", description: "Revisar ropa seca y guardarla", category: "tareas" },
-                { time: "5:00", description: "Lavar zapatos (ej. viernes o sábado)", category: "tareas" },
-                { time: "5:30", description: "Cepillar a Max", category: "mascotas" },
-                { time: "5:45", description: "Mantener limpia la zona verde", category: "tareas" }
+                { time: "01:00", description: "Descanso - escuchar música - lectura", category: "escuela" },
+                { time: "02:00", description: "Recoger ropa piscina y lavar paño y tenis - lavar la otra ropa", category: "tareas" },
+                { time: "03:00", description: "Recoger y guardar ropa seca", category: "tareas" },
+                { time: "03:30", description: "Limpieza zona verde hojas - basura", category: "tareas" },
+                { time: "04:30", description: "Tiempo libre", category: "escuela" }
             ],
             evening: [
-                { time: "7:00", description: "Preparar la cena", category: "comidas" },
-                { time: "7:45", description: "Lavar, secar y guardar platos", category: "tareas" },
-                { time: "8:15", description: "Revisar menú de comidas (planificar día siguiente)", category: "comidas" },
-                { time: "8:30", description: "Cepillarse los dientes, lavarse los pies", category: "higiene" },
-                { time: "9:00", description: "Dormir / descanso", category: "escuela" }
+                { time: "07:00", description: "Preparar la cena", category: "comidas" },
+                { time: "07:30", description: "Revisar menú y ajustar comida para el día siguiente - sacar carne del congelador - hacer frijoles", category: "comidas" },
+                { time: "08:00", description: "Cepillan los dientes", category: "higiene" },
+                { time: "08:30", description: "Bañarse y poner pijamas", category: "higiene" },
+                { time: "09:00", description: "Dormir / descanso", category: "escuela" }
             ],
             weekly: [
                 { description: "Bañar a Max y Lucy → 1 vez al mes (ej. primer sábado del mes a las 9:00 am)", category: "mascotas" },
@@ -432,6 +490,17 @@
                 { description: "Ir a hacer las compras → lunes 8:30 am", category: "pagos" },
                 { description: "Revisar menú de comidas → cada domingo 6:00 pm", category: "comidas" }
             ]
+        };
+
+        // Menú semanal
+        const weeklyMenu = {
+            lunes: { almuerzo: "Chuleta / Cebolla", cena: "✔" },
+            martes: { almuerzo: "Chili con carne o carne desmechada", cena: "✔" },
+            miercoles: { almuerzo: "Pollo con papas / Pollo frito", cena: "✔" },
+            jueves: { almuerzo: "Bistek encebollado", cena: "✔" },
+            viernes: { almuerzo: "Pescado", cena: "✔" },
+            sabado: { almuerzo: "Hamburguesas", cena: "✔" },
+            domingo: { almuerzo: "Comida linda", cena: "✔" }
         };
 
         // Mapeo de categorías a colores
@@ -471,8 +540,8 @@
         function renderSchedule() {
             renderTimeSection('morning', 'morningTasks');
             renderTimeSection('midday', 'middayTasks');
-            renderTimeSection('afternoon', 'afternoonTasks');
             renderTimeSection('evening', 'eveningTasks');
+            renderWeeklyMenu();
             renderWeeklyTasks();
         }
 
@@ -493,6 +562,30 @@
                         <div class="task-description">${task.description}</div>
                         <input type="checkbox" class="task-checkbox" ${isCompleted ? 'checked' : ''} 
                                onchange="toggleTask('${taskId}')">
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Renderizar menú semanal
+        function renderWeeklyMenu() {
+            const container = document.getElementById('weeklyMenu');
+            const days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+            const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+            
+            container.innerHTML = days.map((day, index) => {
+                const menu = weeklyMenu[day];
+                return `
+                    <div class="menu-day">
+                        <h3>${dayNames[index]}</h3>
+                        <div class="menu-meal">
+                            <div class="menu-meal-label">Almuerzo:</div>
+                            <div class="menu-meal-item">${menu.almuerzo}</div>
+                        </div>
+                        <div class="menu-meal">
+                            <div class="menu-meal-label">Cena:</div>
+                            <div class="menu-meal-item">${menu.cena}</div>
+                        </div>
                     </div>
                 `;
             }).join('');
